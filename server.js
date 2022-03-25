@@ -9,7 +9,7 @@ app.get( '/', ( req, res ) => {
     res.send('Welcome to evening API')
 } )
 app.use( '/api', blogRouter )
-app.use('/api', commentRouter)
+app.use( '/api', commentRouter )
 app.listen( port, () => {
     console.log(`Server is listening to port ${port}`)
 })

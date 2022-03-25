@@ -8,13 +8,13 @@ const commentSchema = new Schema( {
     },
     msg: {
         type: String,
-        require: true
+        required: true
     },
     poster: {
         type: Schema.Types.ObjectId,
         ref: 'blogs'
     }
-}, {timestamps: true} )
+}, { timestamps: true } )
 
 const commentModel = mongoose.model( 'comment', commentSchema )
 module.exports = commentModel;

@@ -1,12 +1,11 @@
 const express = require( 'express' )
 const router = express.Router()
-const {newComment} = require("../controller/commentController")
+const {newComment, allComment} = require( '../controller/commentController')
 
-
-// All route and their end points
 router
-    .route( "/blog/:id/comment" )
+    .route( '/blog/:id/comments' )
     .post( newComment )
+    .get(allComment)
 
 
 module.exports = router;
