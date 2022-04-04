@@ -9,7 +9,7 @@ router
     .get( allBlogs )
     
 router
-    .route( '/blog/:id' )
+    .route( '/blog/:blogId' )
     .get( singleBlog )
     .patch( updateBlog )
     .delete( deleteOne )
