@@ -44,7 +44,7 @@ const allBlogs = async ( req, res ) => {
 const singleBlog = async ( req, res ) => {
     try {
         // get the id from the request head
-        const blogId = req.params.id
+        const blogId = req.params.blogId
         // get the document of this id
         const blog = await blogModel.findById( blogId )
         res.status( 200 ).json( {
@@ -63,14 +63,14 @@ const singleBlog = async ( req, res ) => {
 const updateBlog = async ( req, res ) => {
     try {
         // get the id from the request head
-        const blogId = req.params.id
+        const blogId = req.params.blogId
         // get all the data from the body object
         const data = {
             title: req.body.title,
             content: req.body.content
         }
         // update the document
-        const updatedBlog = await blogModel.findByIdAndUpdate(blogId, data)
+        const updatedBlog = await blogModel.findByIdAndUpdate(blogId, data, {new: true});
         res.status( 200 ).json( {
             status: 'success',
             data: updatedBlog
@@ -87,7 +87,7 @@ const updateBlog = async ( req, res ) => {
 const deleteOne = async ( req, res ) => {
     try {
         // get the document id
-        const blogId = req.params.id
+        const blogId = req.params.blogId
         // remove the document with this id
         await blogModel.findByIdAndRemove( blogId )
         res.status( 200 ).json( {
@@ -102,38 +102,6 @@ const deleteOne = async ( req, res ) => {
     }
 }
 
-// new comment
-const newComment = async ( req, res ) => {
-    try {
-        // get the id from the params
-        const blogId = req.params.id;
-        // get the document allocated to that id
-        const blog = await blogModel.findById( blogId );
-        console.log(blog)
-        // create new comment instance
-        const comm = new commentModel(req.body)
-        // tigh comment to a document
-        comm.poster = blog
-        // save the comment
-        comm.save()
-        // push the comment into the specific blog post
-        blog.comments.push( comm )
-        // save the blog
-        blog.save()
-        res.status( 200 ).json( {
-            status: 'success',
-            data: comm
-        })
-    } catch ( error ) {
-        console.log(error)
-        res.status( 500 ).json( {
-            status: 'fail',
-            message: error.message,
-            
-        })
-    }
-}
-
 
 module.exports = {
     newBlog,
@@ -141,5 +109,4 @@ module.exports = {
     singleBlog,
     updateBlog,
     deleteOne,
-    newComment
 }
